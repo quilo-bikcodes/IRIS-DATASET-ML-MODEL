@@ -163,5 +163,6 @@ class ViolinPltPage(tk.Frame):
   
 #  lambda : controller.show_frame(StartPage)
 # Driver Code
-app = tkinterApp()
-app.mainloop()
+def rungui():
+    app = tkinterApp()
+    app.mainloop()
