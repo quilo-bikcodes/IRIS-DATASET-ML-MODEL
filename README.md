@@ -6,6 +6,6 @@ This will install all the requirements modules using the **pip package manager**
 ```pip install -r requirements.txt``` 
 
 # This repo is maintaned by Bikcodes
-Developer
-Bikramjeet Dasgupta
+Developer\n
+Bikramjeet Dasgupta\n
 quilo.bikcodes@gmail.com 
