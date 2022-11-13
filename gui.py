@@ -25,6 +25,7 @@ class tkinterApp(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
         self.title("Iris Dataset Analysis")
         self.geometry("500x200")
+        self.resizable(False, False)
          
         # creating a container
         container = tk.Frame(self) 
@@ -38,7 +39,8 @@ class tkinterApp(tk.Tk):
   
         # iterating through a tuple consisting
         # of the different page layouts
-        for F in (StartPage, Page1, DataStatsPage,PltSelectPage,LinePltPage,ViolinPltPage,MLHome):
+        for F in (StartPage, Page1, DataStatsPage,PltSelectPage,LinePltPage,
+        ViolinPltPage,MLHome,KNNHome,LRHome,ManualHomeKNN,DataSetKNN,SpecK_KNN,Range_KNN):
   
             frame = F(container, self)
   
@@ -162,7 +164,7 @@ class MLHome(tk.Frame):
          
         tk.Frame.__init__(self, parent)
         label1 = Label(self,text="Choose Your ML Algorithm")
-        button1 = Button(self,text="K-NN",command=lambda : controller.show_frame(PltSelectPage))
+        button1 = Button(self,text="K-NN",command=lambda : controller.show_frame(KNNHome))
         button2 = Button(self,text="Logistic Reg",command=lambda : controller.show_frame(DataStatsPage))
         bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(Page1))
 
@@ -176,14 +178,129 @@ class LRHome(tk.Frame):
          
         tk.Frame.__init__(self, parent)
         label1 = Label(self,text="Click on predict and get the accuracy score")
-        button1 = Button(self,text="K-NN",command=lambda : controller.show_frame(PltSelectPage))
+        button1 = Button(self,text="K-NN",command=lambda : controller.show_frame(KNNHome))
         button2 = Button(self,text="Logistic Reg",command=lambda : controller.show_frame(DataStatsPage))
-        bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(Page1))
+        bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(MLHome))
 
         label1.place(relx=.5, rely=.3,anchor= CENTER)
-        button1.place(relx=.4, rely=.5,anchor= CENTER)
-        button2.place(relx=.6, rely=.5,anchor= CENTER)
+        button1.place(relx=.35, rely=.5,anchor= CENTER)
+        button2.place(relx=.45, rely=.5,anchor= CENTER)
         bckbtn.place(relx=.5, rely=.8,anchor= CENTER)
+
+class KNNHome(tk.Frame):
+     
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        label1 = Label(self,text="Choose your dataset")
+        button1 = Button(self,text="Manual Data",command=lambda : controller.show_frame(ManualHomeKNN))
+        button2 = Button(self,text="Data from Testing Set",command=lambda : controller.show_frame(DataSetKNN))
+        bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(MLHome))
+
+        label1.place(relx=.5, rely=.1,anchor= CENTER)
+        button1.place(relx=.5, rely=.3,anchor= CENTER)
+        button2.place(relx=.5, rely=.5,anchor= CENTER)
+        bckbtn.place(relx=.5, rely=.8,anchor= CENTER)
+
+class ManualHomeKNN(tk.Frame):
+     
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        labeldesc = Label(self,text="Enter the respective values (in cm)")
+        label1 = Label(self,text="Sepal Length")
+        label2 = Label(self,text="Sepal Width")
+        label3 = Label(self,text="Petal Length")
+        label4 = Label(self,text="Petal Width")
+        labelk = Label(self,text="Value of K")
+
+        label_output = Label(self,text="Iris Setosa",font=32)
+
+        input1 = Entry(self,width=10)
+        input2 = Entry(self,width=10)
+        input3 = Entry(self,width=10)
+        input4 = Entry(self,width=10)
+        inputk = Entry(self,width=10)
+        button1 = Button(self,text="PREDICT")
+        bkbtn = Button(self,text="BACK",command=lambda: controller.show_frame(KNNHome))
+
+        
+
+        labeldesc.place(relx=.5, rely=.1,anchor= CENTER)
+
+        label1.place(relx=.2, rely=0.35,anchor=CENTER)
+        label2.place(relx=.4, rely=0.35,anchor=CENTER)
+        label3.place(relx=.6, rely=0.35,anchor=CENTER)
+        label4.place(relx=.8, rely=0.35,anchor=CENTER)
+
+        input1.place(relx=.2, rely=.25,anchor= CENTER)
+        input2.place(relx=.4, rely=.25,anchor= CENTER)
+        input3.place(relx=.6, rely=.25,anchor= CENTER)
+        input4.place(relx=.8, rely=.25,anchor= CENTER)
+        
+        button1.place(relx=.4, rely=.55,anchor= CENTER)
+        bkbtn.place(relx=.6, rely=.55,anchor= CENTER)
+        
+        label_output.place(relx=.5, rely=.8,anchor= CENTER)
+
+        
+class DataSetKNN(tk.Frame):
+     
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        label1 = Label(self,text="Choose your type of K selection")
+        button1 = Button(self,text="Specific K",command=lambda : controller.show_frame(SpecK_KNN))
+        button2 = Button(self,text="Range of K",command=lambda : controller.show_frame(Range_KNN))
+        bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(KNNHome))
+
+        label1.place(relx=.5, rely=.2,anchor= CENTER)
+        button1.place(relx=.4, rely=.4,anchor= CENTER)
+        button2.place(relx=.6, rely=.4,anchor= CENTER)
+        bckbtn.place(relx=.5, rely=.7,anchor= CENTER)
+
+class SpecK_KNN(tk.Frame):
+     
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        label1 = Label(self,text="Enter the vaue of K")
+        label_ouput = Label(self,text="Accuracy: 99.5%",font=32)
+        button1 = Button(self,text="Predict",command=lambda : controller.show_frame(ManualHomeKNN))
+        bckbtn = Button(self,text="BACK",command=lambda:controller.show_frame(DataSetKNN))
+        input1 = Entry(self,width=10)
+
+
+        label1.place(relx=.5, rely=.2,anchor= CENTER)
+        label_ouput.place(relx=.5, rely=.7,anchor= CENTER)
+        input1.place(relx=.4, rely=.4,anchor=CENTER)
+        button1.place(relx=.6, rely=.4,anchor= CENTER)
+        bckbtn.place(relx=.8, rely=.4,anchor= CENTER)
+
+
+class Range_KNN(tk.Frame):
+     
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        label1 = Label(self,text="Enter the range of K")
+        
+        button1 = Button(self,text="Plot the Accuracy Graph",command=lambda : controller.show_frame(ManualHomeKNN))
+        bckbtn = Button(self,text="BACK",command=lambda:controller.show_frame(DataSetKNN))
+        input1 = Entry(self,width=10)
+
+
+        label1.place(relx=.5, rely=.2,anchor= CENTER)
+        
+        input1.place(relx=.4, rely=.4,anchor=CENTER)
+        button1.place(relx=.68, rely=.4,anchor= CENTER)
+        bckbtn.place(relx=.5, rely=.7,anchor= CENTER)
+
+
+        
+
+        
+
 
 
 
