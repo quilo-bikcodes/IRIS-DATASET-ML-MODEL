@@ -1,5 +1,5 @@
 # IRIS-DATASET-ML-MODEL
-<meta name="apple-mobile-web-app-title" content="My App">
+
 ## Run this code snipnet in your terminal before running the code
 This will install all the requirements modules using the **pip package manager**
 
