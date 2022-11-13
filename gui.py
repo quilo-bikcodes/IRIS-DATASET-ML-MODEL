@@ -40,7 +40,7 @@ class tkinterApp(tk.Tk):
         # iterating through a tuple consisting
         # of the different page layouts
         for F in (StartPage, Page1, DataStatsPage,PltSelectPage,LinePltPage,
-        ViolinPltPage,MLHome,KNNHome,LRHome,ManualHomeKNN,DataSetKNN,SpecK_KNN,Range_KNN):
+        ViolinPltPage,MLHome,KNNHome,LRHome,ManualHomeKNN,DataSetKNN,SpecK_KNN,Range_KNN,ManualHomeLOG):
   
             frame = F(container, self)
   
@@ -232,11 +232,13 @@ class ManualHomeKNN(tk.Frame):
         label2.place(relx=.4, rely=0.35,anchor=CENTER)
         label3.place(relx=.6, rely=0.35,anchor=CENTER)
         label4.place(relx=.8, rely=0.35,anchor=CENTER)
+        labelk.place(relx=.2, rely=0.65,anchor=CENTER)
 
         input1.place(relx=.2, rely=.25,anchor= CENTER)
         input2.place(relx=.4, rely=.25,anchor= CENTER)
         input3.place(relx=.6, rely=.25,anchor= CENTER)
         input4.place(relx=.8, rely=.25,anchor= CENTER)
+        inputk.place(relx=.2, rely=.55,anchor= CENTER)
         
         button1.place(relx=.4, rely=.55,anchor= CENTER)
         bkbtn.place(relx=.6, rely=.55,anchor= CENTER)
@@ -297,7 +299,48 @@ class Range_KNN(tk.Frame):
         bckbtn.place(relx=.5, rely=.7,anchor= CENTER)
 
 
+class ManualHomeLOG(tk.Frame):
+     
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        labeldesc = Label(self,text="Enter the respective values (in cm)")
+        label1 = Label(self,text="Sepal Length")
+        label2 = Label(self,text="Sepal Width")
+        label3 = Label(self,text="Petal Length")
+        label4 = Label(self,text="Petal Width")
+        labelk = Label(self,text="Value of K")
+
+        label_output = Label(self,text="Iris Setosa",font=32)
+
+        input1 = Entry(self,width=10)
+        input2 = Entry(self,width=10)
+        input3 = Entry(self,width=10)
+        input4 = Entry(self,width=10)
+        inputk = Entry(self,width=10)
+        button1 = Button(self,text="PREDICT")
+        bkbtn = Button(self,text="BACK",command=lambda: controller.show_frame(KNNHome))
+
         
+
+        labeldesc.place(relx=.5, rely=.1,anchor= CENTER)
+
+        label1.place(relx=.2, rely=0.35,anchor=CENTER)
+        label2.place(relx=.4, rely=0.35,anchor=CENTER)
+        label3.place(relx=.6, rely=0.35,anchor=CENTER)
+        label4.place(relx=.8, rely=0.35,anchor=CENTER)
+        labelk.place(relx=.2, rely=0.65,anchor=CENTER)
+
+        input1.place(relx=.2, rely=.25,anchor= CENTER)
+        input2.place(relx=.4, rely=.25,anchor= CENTER)
+        input3.place(relx=.6, rely=.25,anchor= CENTER)
+        input4.place(relx=.8, rely=.25,anchor= CENTER)
+        inputk.place(relx=.2, rely=.55,anchor= CENTER)
+        
+        button1.place(relx=.4, rely=.55,anchor= CENTER)
+        bkbtn.place(relx=.6, rely=.55,anchor= CENTER)
+        
+        label_output.place(relx=.5, rely=.8,anchor= CENTER)
 
         
 
