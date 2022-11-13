@@ -38,7 +38,7 @@ class tkinterApp(tk.Tk):
   
         # iterating through a tuple consisting
         # of the different page layouts
-        for F in (StartPage, Page1, DataStatsPage,PltSelectPage,LinePltPage,ViolinPltPage):
+        for F in (StartPage, Page1, DataStatsPage,PltSelectPage,LinePltPage,ViolinPltPage,MLHome):
   
             frame = F(container, self)
   
@@ -84,7 +84,7 @@ class Page1(tk.Frame):
         label1 = Label(self,text="Choose Your Requirements")
         button1 = Button(self,text="Data Plots",command=lambda : controller.show_frame(PltSelectPage))
         button2 = Button(self,text="Data Stats",command=lambda : controller.show_frame(DataStatsPage))
-        button3 = Button(self,text="ML Prediction")
+        button3 = Button(self,text="ML Prediction",command=lambda : controller.show_frame(MLHome))
 
         label1.place(relx=.5, rely=.3,anchor= CENTER)
         button1.place(relx=.3, rely=.5,anchor= CENTER)
@@ -156,7 +156,36 @@ class ViolinPltPage(tk.Frame):
         button4.place(relx=.6, rely=.6,anchor= CENTER)
         bckbtn.place(relx=.5, rely=.8,anchor= CENTER)
 
-    
+class MLHome(tk.Frame):
+     
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        label1 = Label(self,text="Choose Your ML Algorithm")
+        button1 = Button(self,text="K-NN",command=lambda : controller.show_frame(PltSelectPage))
+        button2 = Button(self,text="Logistic Reg",command=lambda : controller.show_frame(DataStatsPage))
+        bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(Page1))
+
+        label1.place(relx=.5, rely=.3,anchor= CENTER)
+        button1.place(relx=.4, rely=.5,anchor= CENTER)
+        button2.place(relx=.6, rely=.5,anchor= CENTER)
+        bckbtn.place(relx=.5, rely=.8,anchor= CENTER)
+class LRHome(tk.Frame):
+     
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        label1 = Label(self,text="Click on predict and get the accuracy score")
+        button1 = Button(self,text="K-NN",command=lambda : controller.show_frame(PltSelectPage))
+        button2 = Button(self,text="Logistic Reg",command=lambda : controller.show_frame(DataStatsPage))
+        bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(Page1))
+
+        label1.place(relx=.5, rely=.3,anchor= CENTER)
+        button1.place(relx=.4, rely=.5,anchor= CENTER)
+        button2.place(relx=.6, rely=.5,anchor= CENTER)
+        bckbtn.place(relx=.5, rely=.8,anchor= CENTER)
+
+
 
 
        

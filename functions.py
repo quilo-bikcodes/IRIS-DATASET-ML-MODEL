@@ -77,13 +77,14 @@ class MlPrediction:
         Scaled_X = Scaler.fit_transform(X)
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
         classifier = KNeighborsClassifier(n_neighbors=K)
-        classifier.fit(X_train,y_train)
-        y_pred = classifier.predict(X_test)
-        return metrics.accuracy_score(y_test, y_pred)
+        classifier.fit(X_train.values,y_train)
+        y_pred = classifier.predict([[10,50,355,1]])
+        return y_pred
+        # return metrics.accuracy_score(y_test, y_pred)
     
 
     def LogRegalgo(self):
-        X = self.data.drop(['Id', 'Species'], axis=1) # Indeependent variable
+        X = self.data.drop(['Id', 'Species'], axis=1) # Independent variable
         Y = self.data['Species'] # Dependent variable
         
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
@@ -95,10 +96,11 @@ class MlPrediction:
 
 iris_df = pd.read_csv('./data/iris.csv')
 obj = MlPrediction(iris_df)
-# a = obj.KNNalgo(36)
-b = obj.LogRegalgo()
+a = obj.KNNalgo(35)
+print(a)
+# b = obj.LogRegalgo()
 # print(str(a*100)+"%")
-print(str(b*100)+"%")
+# print(str(b*100)+"%")
 
     
 
