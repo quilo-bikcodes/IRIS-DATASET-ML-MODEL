@@ -8,7 +8,7 @@ This will install all the requirements modules using the **pip package manager**
 ## To start the program
 ```python main.py```
 <br/>
-Use the abpve snippet in terminal.
+Use the above snippet in terminal.
 
 ### This repo is maintaned by Bikcodes
 Developer  <br />

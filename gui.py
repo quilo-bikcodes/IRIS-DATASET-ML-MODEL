@@ -281,7 +281,7 @@ class SpecK_KNN(tk.Frame):
     def __init__(self, parent, controller):
          
         tk.Frame.__init__(self, parent)
-        label1 = Label(self,text="Enter the vaue of K")
+        label1 = Label(self,text="Enter the value of K")
         input1 = Entry(self,width=10)
         label_ouput = Label(self,text="",font=32)
 
