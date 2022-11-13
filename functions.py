@@ -90,7 +90,7 @@ class MlPrediction:
        
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
         classifier = KNeighborsClassifier(n_neighbors=K)
-        classifier.fit(X_train.values,y_train)
+        classifier.fit(X_train,y_train)
         y_pred = classifier.predict(X_test)
         
         return metrics.accuracy_score(y_test, y_pred)
@@ -123,8 +123,21 @@ class MlPrediction:
         classifier = LogisticRegression()
         classifier.fit(X_train,y_train)
         y_pred = classifier.predict(X_test)
-        print(y_pred)
+        
         return metrics.accuracy_score(y_test, y_pred)
+    
+    def LoGalgo__manual__(self,SL,SW,PL,PW):
+        Scaler = StandardScaler()
+        
+        
+        X = self.data.drop(['Id', 'Species'], axis=1) # Independent variable
+        Y = self.data['Species'] # Dependent variable
+        Scaled_X = Scaler.fit_transform(X)
+        X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+        classifier = LogisticRegression()
+        classifier.fit(X_train.values,y_train)
+        y_pred = classifier.predict([[SL,SW,PL,PW]])
+        return y_pred
 
 iris_df = pd.read_csv('./data/iris.csv')
 obj = MlPrediction(iris_df)

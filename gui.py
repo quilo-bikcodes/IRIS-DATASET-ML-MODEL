@@ -2,12 +2,14 @@ from tkinter import *
 import tkinter as tk
 import tkinter as ttk
 from functions import pltgraph
+from functions import MlPrediction
 import pandas as pd
 
 
 # Loading the Data Set
 iris_df = pd.read_csv('./data/iris.csv')
 dataplt = pltgraph(iris_df)
+mlalgo = MlPrediction(iris_df)
 def showplt():
     dataplt.get_linepltSLcm()
 def showstats():   
@@ -40,7 +42,7 @@ class tkinterApp(tk.Tk):
         # iterating through a tuple consisting
         # of the different page layouts
         for F in (StartPage, Page1, DataStatsPage,PltSelectPage,LinePltPage,
-        ViolinPltPage,MLHome,KNNHome,LRHome,ManualHomeKNN,DataSetKNN,SpecK_KNN,Range_KNN,ManualHomeLOG):
+        ViolinPltPage,MLHome,KNNHome,ManualHomeKNN,DataSetKNN,SpecK_KNN,Range_KNN,ManualHomeLOG,LOGHome,Dataset_LOG):
   
             frame = F(container, self)
   
@@ -64,10 +66,12 @@ class tkinterApp(tk.Tk):
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        def quit():
+            exit()
          
         label=Label(self,text="WELCOME TO IRIS DATASET ML MODEL")
         button1 = Button(self,text ="NEXT",width=10,command=lambda : controller.show_frame(Page1))
-        button2 = Button(self,text="QUIT",width=10,command=self.destroy)
+        button2 = Button(self,text="QUIT",width=10,command=quit)
         #Display label
         label.place(relx=.5, rely=.3,anchor= CENTER)
         button1.place(relx=.4, rely=.5,anchor= CENTER)
@@ -165,36 +169,37 @@ class MLHome(tk.Frame):
         tk.Frame.__init__(self, parent)
         label1 = Label(self,text="Choose Your ML Algorithm")
         button1 = Button(self,text="K-NN",command=lambda : controller.show_frame(KNNHome))
-        button2 = Button(self,text="Logistic Reg",command=lambda : controller.show_frame(DataStatsPage))
+        button2 = Button(self,text="Logistic Reg",command=lambda : controller.show_frame(LOGHome))
         bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(Page1))
 
         label1.place(relx=.5, rely=.3,anchor= CENTER)
         button1.place(relx=.4, rely=.5,anchor= CENTER)
         button2.place(relx=.6, rely=.5,anchor= CENTER)
         bckbtn.place(relx=.5, rely=.8,anchor= CENTER)
-class LRHome(tk.Frame):
-     
-    def __init__(self, parent, controller):
-         
-        tk.Frame.__init__(self, parent)
-        label1 = Label(self,text="Click on predict and get the accuracy score")
-        button1 = Button(self,text="K-NN",command=lambda : controller.show_frame(KNNHome))
-        button2 = Button(self,text="Logistic Reg",command=lambda : controller.show_frame(DataStatsPage))
-        bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(MLHome))
 
-        label1.place(relx=.5, rely=.3,anchor= CENTER)
-        button1.place(relx=.35, rely=.5,anchor= CENTER)
-        button2.place(relx=.45, rely=.5,anchor= CENTER)
-        bckbtn.place(relx=.5, rely=.8,anchor= CENTER)
 
 class KNNHome(tk.Frame):
      
     def __init__(self, parent, controller):
          
         tk.Frame.__init__(self, parent)
-        label1 = Label(self,text="Choose your dataset")
+        label1 = Label(self,text="Choose your dataset For K Nearest Neighbour")
         button1 = Button(self,text="Manual Data",command=lambda : controller.show_frame(ManualHomeKNN))
         button2 = Button(self,text="Data from Testing Set",command=lambda : controller.show_frame(DataSetKNN))
+        bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(MLHome))
+
+        label1.place(relx=.5, rely=.1,anchor= CENTER)
+        button1.place(relx=.5, rely=.3,anchor= CENTER)
+        button2.place(relx=.5, rely=.5,anchor= CENTER)
+        bckbtn.place(relx=.5, rely=.8,anchor= CENTER)
+class LOGHome(tk.Frame):
+     
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        label1 = Label(self,text="Choose your dataset For Logistic Regression")
+        button1 = Button(self,text="Manual Data",command=lambda : controller.show_frame(ManualHomeLOG))
+        button2 = Button(self,text="Data from Testing Set",command=lambda : controller.show_frame(Dataset_LOG))
         bckbtn = Button(self,text="BACK",command=lambda: controller.show_frame(MLHome))
 
         label1.place(relx=.5, rely=.1,anchor= CENTER)
@@ -214,16 +219,26 @@ class ManualHomeKNN(tk.Frame):
         label4 = Label(self,text="Petal Width")
         labelk = Label(self,text="Value of K")
 
-        label_output = Label(self,text="Iris Setosa",font=32)
+        
+        def showOutput():
+            SL = float(input1.get())
+            SW = float(input2.get())
+            PL = float(input3.get())
+            PW = float(input4.get())
+            K =  int(inputk.get())
+            a = mlalgo.KNNalgo__manual__(K,SL,SW,PL,PW)
+            label_output.config(text=f"The Prediction is :  {a[0]}")
+
+        label_output = Label(self,text="",font=32)
 
         input1 = Entry(self,width=10)
         input2 = Entry(self,width=10)
         input3 = Entry(self,width=10)
         input4 = Entry(self,width=10)
         inputk = Entry(self,width=10)
-        button1 = Button(self,text="PREDICT")
+        button1 = Button(self,text="PREDICT",command=showOutput)
         bkbtn = Button(self,text="BACK",command=lambda: controller.show_frame(KNNHome))
-
+        
         
 
         labeldesc.place(relx=.5, rely=.1,anchor= CENTER)
@@ -267,10 +282,16 @@ class SpecK_KNN(tk.Frame):
          
         tk.Frame.__init__(self, parent)
         label1 = Label(self,text="Enter the vaue of K")
-        label_ouput = Label(self,text="Accuracy: 99.5%",font=32)
-        button1 = Button(self,text="Predict",command=lambda : controller.show_frame(ManualHomeKNN))
-        bckbtn = Button(self,text="BACK",command=lambda:controller.show_frame(DataSetKNN))
         input1 = Entry(self,width=10)
+        label_ouput = Label(self,text="",font=32)
+
+        def showOutput():
+            K = int(input1.get())
+            a = mlalgo.KNNalgo__auto__(K)
+            label_ouput.config(text=f"Accuracy: {float(a*100)}%")
+            
+        button1 = Button(self,text="Predict",command=showOutput)
+        bckbtn = Button(self,text="BACK",command=lambda:controller.show_frame(DataSetKNN))
 
 
         label1.place(relx=.5, rely=.2,anchor= CENTER)
@@ -286,10 +307,13 @@ class Range_KNN(tk.Frame):
          
         tk.Frame.__init__(self, parent)
         label1 = Label(self,text="Enter the range of K")
-        
-        button1 = Button(self,text="Plot the Accuracy Graph",command=lambda : controller.show_frame(ManualHomeKNN))
-        bckbtn = Button(self,text="BACK",command=lambda:controller.show_frame(DataSetKNN))
         input1 = Entry(self,width=10)
+        def showOutput():
+            K = int(input1.get())
+            mlalgo.KNNalgo__auto__range(K)
+            
+        button1 = Button(self,text="Plot the Accuracy Graph",command=showOutput)
+        bckbtn = Button(self,text="BACK",command=lambda:controller.show_frame(DataSetKNN))
 
 
         label1.place(relx=.5, rely=.2,anchor= CENTER)
@@ -309,17 +333,25 @@ class ManualHomeLOG(tk.Frame):
         label2 = Label(self,text="Sepal Width")
         label3 = Label(self,text="Petal Length")
         label4 = Label(self,text="Petal Width")
-        labelk = Label(self,text="Value of K")
+        
 
-        label_output = Label(self,text="Iris Setosa",font=32)
+        label_output = Label(self,text="",font=32)
 
         input1 = Entry(self,width=10)
         input2 = Entry(self,width=10)
         input3 = Entry(self,width=10)
         input4 = Entry(self,width=10)
-        inputk = Entry(self,width=10)
-        button1 = Button(self,text="PREDICT")
-        bkbtn = Button(self,text="BACK",command=lambda: controller.show_frame(KNNHome))
+        def showOutput():
+            SL = float(input1.get())
+            SW = float(input2.get())
+            PL = float(input3.get())
+            PW = float(input4.get())
+           
+            a = mlalgo.LoGalgo__manual__(SL,SW,PL,PW)
+            label_output.config(text=f"The Prediction is :  {a[0]}")
+        
+        button1 = Button(self,text="PREDICT",command=showOutput)
+        bkbtn = Button(self,text="BACK",command=lambda: controller.show_frame(LOGHome))
 
         
 
@@ -329,13 +361,13 @@ class ManualHomeLOG(tk.Frame):
         label2.place(relx=.4, rely=0.35,anchor=CENTER)
         label3.place(relx=.6, rely=0.35,anchor=CENTER)
         label4.place(relx=.8, rely=0.35,anchor=CENTER)
-        labelk.place(relx=.2, rely=0.65,anchor=CENTER)
+        
 
         input1.place(relx=.2, rely=.25,anchor= CENTER)
         input2.place(relx=.4, rely=.25,anchor= CENTER)
         input3.place(relx=.6, rely=.25,anchor= CENTER)
         input4.place(relx=.8, rely=.25,anchor= CENTER)
-        inputk.place(relx=.2, rely=.55,anchor= CENTER)
+        
         
         button1.place(relx=.4, rely=.55,anchor= CENTER)
         bkbtn.place(relx=.6, rely=.55,anchor= CENTER)
@@ -344,7 +376,29 @@ class ManualHomeLOG(tk.Frame):
 
         
 
+class Dataset_LOG(tk.Frame):
+     
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        label1 = Label(self,text="Get the accuracy of the prediction")
+        label_output = Label(self,text="",font=32)
 
+        def showOutput():
+          
+            a = mlalgo.LogRegalgo()
+            label_output.config(text=f"Accuracy:  {str(float(a*100))}%")
+
+        button1 = Button(self,text="Predict",command=showOutput)
+        bckbtn = Button(self,text="BACK",command=lambda:controller.show_frame(LOGHome))
+        
+
+
+        label1.place(relx=.5, rely=.2,anchor= CENTER)
+        label_output.place(relx=.5, rely=.7,anchor= CENTER)
+        
+        button1.place(relx=.4, rely=.4,anchor= CENTER)
+        bckbtn.place(relx=.6, rely=.4,anchor= CENTER)
 
 
 
