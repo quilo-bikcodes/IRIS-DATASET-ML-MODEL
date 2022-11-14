@@ -10,7 +10,7 @@ This will install all the requirements modules using the **pip package manager**
 <br/>
 Use the above snippet in terminal.
 
-### This repo is maintaned by Bikcodes
+### This repo is maintained by Bikcodes
 Developer  <br />
 Bikramjeet Dasgupta  <br />
 quilo.bikcodes@gmail.com 
