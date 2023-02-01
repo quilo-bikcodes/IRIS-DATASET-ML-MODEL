@@ -404,7 +404,7 @@ class Dataset_LOG(tk.Frame):
 
        
   
-#  lambda : controller.show_frame(StartPage)
+
 # Driver Code
 def rungui():
     app = tkinterApp()
